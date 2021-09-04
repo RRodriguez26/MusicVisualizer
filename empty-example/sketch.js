@@ -22,10 +22,11 @@ function draw() {
   stroke(255);
   strokeWeight(.5);
   noFill();
+  
 
   translate(width / 2, height /2);
 
-  //help react to the bets
+  //help react to the beats
   fft.analyze();
   amp = fft.getEnergy(20, 200);
 
@@ -57,8 +58,9 @@ function draw() {
   for (let i = particles.length - 1; i >= 0 ; i--) {
     if (!particles[i].edges()){
       //depending of the amp, it eacts to the beats
-      particles[i].update(amp > 200);
+      particles[i].update(amp > 190);
       particles[i].show();
+      rotate(.1);
     } else {
       particles.splice(i, 1);
     }
@@ -85,10 +87,10 @@ function draw() {
 function mouseClicked() {
   if (song.isPlaying()) {
     song.pause();
-    noLoop();
+    //noLoop();
   } else {
     song.play();
-    loop();
+    //loop();
   }
 }
 
@@ -99,16 +101,16 @@ class Particle {
     //starting velocity
     this.velocity = createVector(0, 0);
     //allows the partile t ospeed up
-    this.acceleration = this.position.copy().mult(random(0.0001, 0.00001))
+    this.acceleration = this.position.copy().mult(random(0.00001, 0.00001))
 
     this.width = random(3, 5);
 
-    this.color = [random(200, 255), random(200, 255), random(200, 255)]
+    this.color = [random(100, 255), random(100, 255), random(100, 255)]
   }
 
   //method to get rid of the particle after leaving thescreen
   edges() {
-    if (this.position.x < -width / 2 || this.position.x > width / 2 || this.position.y < -height / 2 || this.position.y > height / 2) {
+    if (this.position.x < -windowWidth || this.position.x > windowWidth || this.position.y < -windowHeight || this.position.y > windowHeight) {
       return true;
     } else {
       return false;
