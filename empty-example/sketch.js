@@ -20,13 +20,16 @@ function draw() {
   // put drawing code here
   background(0);
   stroke(255);
+  strokeWeight(.5);
   noFill();
 
   translate(width / 2, height /2);
 
-  let wave = fft.waveform();
+  //help react to the bets
+  fft.analyze();
+  amp = fft.getEnergy(20, 200);
 
-  
+  let wave = fft.waveform();
   
   for (let j = -1; j <= 1; j += 2){
 
@@ -53,7 +56,8 @@ function draw() {
 
   for (let i = particles.length - 1; i >= 0 ; i--) {
     if (!particles[i].edges()){
-      particles[i].update();
+      //depending of the amp, it eacts to the beats
+      particles[i].update(amp > 200);
       particles[i].show();
     } else {
       particles.splice(i, 1);
@@ -111,9 +115,14 @@ class Particle {
     }
   }
 
-  update() {
+  update(condition) {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
+    if (condition) {
+      this.position.add(this.velocity);
+      this.position.add(this.velocity);
+      this.position.add(this.velocity);
+    }
   }
 
   //this method allows the particle to show on the screen
