@@ -1,5 +1,7 @@
 var song;
 var fft;
+
+ampEffect  = 0;
 //keep track of the particles by using array
 let particles = [];
 
@@ -31,6 +33,8 @@ function draw() {
   amp = fft.getEnergy(20, 200);
 
   let wave = fft.waveform();
+
+  backgroundChange();
   
   for (let j = -1; j <= 1; j += 2){
 
@@ -40,7 +44,7 @@ function draw() {
     for (let i = 0; i <= 180; i++) {
       let index = floor(map(i, 0, 180, 0, wave.length - 1));
 
-      let radius = map(wave[index], -1, 1, 150, 350)
+      let radius = map(wave[index], -1, 1, 150, 350);
 
       //straight line
       // let x = i;
@@ -60,7 +64,7 @@ function draw() {
       //depending of the amp, it eacts to the beats
       particles[i].update(amp > 190);
       particles[i].show();
-      rotate(.1);
+      rotate(.8);
     } else {
       particles.splice(i, 1);
     }
@@ -82,6 +86,7 @@ function draw() {
   //   vertex(x, y);
   // }
   // endShape();
+  
 }
 
 function mouseClicked() {
@@ -92,6 +97,25 @@ function mouseClicked() {
     song.play();
     //loop();
   }
+}
+
+function backgroundChange() {
+  if (amp > 200) {
+    ampEffect = 255;
+  } 
+
+  if (ampEffect > 0) {
+    ampEffect--;
+  }
+
+  background(color(ampEffect));
+
+  // function changecolor() { 
+  //   for (let i = 255; i >= 0; i--) { 
+  //     //setTimeout(background(color(i, 23, 55)), 500); 
+  //     background(color(i, 23, 55));
+  //   }
+  // }
 }
 
 class Particle {
@@ -124,6 +148,13 @@ class Particle {
       this.position.add(this.velocity);
       this.position.add(this.velocity);
       this.position.add(this.velocity);
+      //backgroundChange();
+      //background(200);
+      // setTimeout(() =>
+      //   { for (let i = 200; i >=0; i--){
+      //     background(i)
+      //   }}, 200)
+      
     }
   }
 
