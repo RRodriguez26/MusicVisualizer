@@ -6,7 +6,7 @@ ampEffect  = 0;
 let particles = [];
 
 function preload() {
-  song = loadSound('../hideaway(Mitch).mp3');
+  song = loadSound('../Too Late.mp3');
 }
 
 function setup() {
@@ -105,10 +105,10 @@ function backgroundChange() {
   } 
 
   if (ampEffect > 0) {
-    ampEffect--;
+    ampEffect -= 10;
   }
 
-  background(color(ampEffect));
+  background(color(ampEffect, 0, 0));
 
   // function changecolor() { 
   //   for (let i = 255; i >= 0; i--) { 
