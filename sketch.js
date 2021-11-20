@@ -16,6 +16,8 @@ function setup() {
   // more curvy
   angleMode(DEGREES);
   fft = new p5.FFT();
+
+  
 }
 
 function draw() {
@@ -54,6 +56,7 @@ function draw() {
       vertex(x, y);
     }
     endShape();
+    
   }
 
   let particle = new Particle();
@@ -69,24 +72,6 @@ function draw() {
       particles.splice(i, 1);
     }
   }
-
-  // //the other half of the circle (change the cosine and sin to a negative)
-  // beginShape();
-  // //replace 180 with 'width' on the next two lines
-  // for (let i = 0; i <= 180; i++) {
-  //   let index = floor(map(i, 0, 180, 0, wave.length - 1));
-
-  //   let radius = map(wave[index], -1, 1, 150, 350)
-
-  //   //straight line
-  //   // let x = i;
-  //   // let y = wave[index] * 300 + height /2;
-  //   let x = radius * -sin(i);
-  //   let y = radius * -cos(i);
-  //   vertex(x, y);
-  // }
-  // endShape();
-  
 }
 
 function mouseClicked() {
@@ -110,12 +95,6 @@ function backgroundChange() {
 
   background(color(ampEffect, 0, 0));
 
-  // function changecolor() { 
-  //   for (let i = 255; i >= 0; i--) { 
-  //     //setTimeout(background(color(i, 23, 55)), 500); 
-  //     background(color(i, 23, 55));
-  //   }
-  // }
 }
 
 class Particle {
@@ -148,12 +127,6 @@ class Particle {
       this.position.add(this.velocity);
       this.position.add(this.velocity);
       this.position.add(this.velocity);
-      //backgroundChange();
-      //background(200);
-      // setTimeout(() =>
-      //   { for (let i = 200; i >=0; i--){
-      //     background(i)
-      //   }}, 200)
       
     }
   }
