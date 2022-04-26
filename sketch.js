@@ -16,15 +16,13 @@ function setup() {
   // more curvy
   angleMode(DEGREES);
   fft = new p5.FFT();
-
-  
 }
 
 function draw() {
   // put drawing code here
   background(0);
   stroke(255);
-  strokeWeight(.5);
+  strokeWeight(0.5);
   noFill();
   
 
@@ -32,7 +30,8 @@ function draw() {
 
   //help react to the beats
   fft.analyze();
-  amp = fft.getEnergy(20, 200);
+  amp = fft.getEnergy("bass", 200);
+  console.log(amp)
 
   let wave = fft.waveform();
 
@@ -46,7 +45,7 @@ function draw() {
     for (let i = 0; i <= 180; i++) {
       let index = floor(map(i, 0, 180, 0, wave.length - 1));
 
-      let radius = map(wave[index], -1, 1, 150, 350);
+      let radius = map(wave[index], -1, 1, 100, 100);
 
       //straight line
       // let x = i;
@@ -67,7 +66,7 @@ function draw() {
       //depending of the amp, it eacts to the beats
       particles[i].update(amp > 190);
       particles[i].show();
-      rotate(.8);
+      rotate(.5);
     } else {
       particles.splice(i, 1);
     }
@@ -85,22 +84,23 @@ function mouseClicked() {
 }
 
 function backgroundChange() {
-  if (amp > 200) {
-    ampEffect = 255;
-  } 
+  // if (amp > 200) {
+  //   ampEffect = 255;
+  // } 
 
-  if (ampEffect > 0) {
-    ampEffect -= 10;
-  }
+  // if (ampEffect > 0) {
+  //   ampEffect -= 10;
+  // }
 
-  background(color(ampEffect, 0, 0));
+  background(color(amp, 0, 0));
 
 }
 
 class Particle {
   constructor() {
     //define a position using the vector.random2D method in p5
-    this.position = p5.Vector.random2D().mult(250);
+    //Controls the diameter of the particles
+    this.position = p5.Vector.random2D().mult(100);
     //starting velocity
     this.velocity = createVector(0, 0);
     //allows the partile t ospeed up
@@ -133,7 +133,7 @@ class Particle {
 
   //this method allows the particle to show on the screen
   show() {
-    noStroke();
+    //noStroke();
     fill(this.color);
     ellipse(this.position.x, this.position.y, this.width)
   }
